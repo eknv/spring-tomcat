@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd ">
 
 
     <bean id="dataSource"
@@ -15,24 +15,33 @@ http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
     </bean>
 
 
-<!--<bean id="dataSource"
-     class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!--<bean id="dataSource"
+         class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
-	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-	<property name="url" value="jdbc:mysql://localhost:3306/javatest" />
-	<property name="username" value="root" />
-	<property name="password" value="aberhallo" />
-</bean>-->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/javatest" />
+        <property name="username" value="root" />
+        <property name="password" value="aberhallo" />
+    </bean>-->
 
     <bean id="JavaTestDao" class="com.eknv.dao.impl.JdbcJavaTestDao">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
     </bean>
-
 
     <!-- the application context definition for the javatest DispatcherServlet -->
     <bean name="/jtest.htm" class="com.eknv.web.JavaTestController">
-        <property name="javaTestDao" ref="JavaTestDao" />
+        <property name="javaTestDao" ref="JavaTestDao"/>
     </bean>
 
-    
+<!--    <bean id="messageService"
+          class="com.eknv.messageServiceImpl"/>
+
+    <bean name="/MessageService"
+          class="org.codehaus.xfire.spring.remoting.XFireExporter">
+        <property name="xfire" ref="xfire"/>
+        <property name="serviceBean" ref="messageService"/>
+        <property name="serviceInterface"
+                  value="com.eknv.service.MessageService"/>
+    </bean>-->
+
 </beans>

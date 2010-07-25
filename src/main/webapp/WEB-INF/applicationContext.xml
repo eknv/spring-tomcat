@@ -1,17 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+       xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://jax-ws.dev.java.net/spring/core http://jax-ws.dev.java.net/spring/core.xsd
+       http://jax-ws.dev.java.net/spring/servlet http://jax-ws.dev.java.net/spring/servlet.xsd"
        default-lazy-init="true">
 
-    <!-- Activates scanning of @Autowired -->
-    <context:annotation-config/>
 
-    <!-- Activates scanning of @Repository and @Service -->
-    <context:component-scan base-package="com.eknv"/>
+    <!--    &lt;!&ndash; Activates scanning of @Autowired &ndash;&gt;
+   <context:annotation-config/>
+   &lt;!&ndash; Activates scanning of @Repository and @Service &ndash;&gt;
+   <context:component-scan base-package="com.eknv"/>-->
 
-    <!-- Add new DAOs here -->
 
-    <!-- Add new Managers here -->
+    <!-- this bean implements web service methods -->
+    <bean id="message" class="com.eknv.service.impl.MessageServiceImpl"/>
+
+    <bean id="mySoapHandler" class="com.eknv.service.impl.MySoapHandler"/>
+
+    <ws:service id="messageService" bean="#message">
+        <ws:handlers>
+            <ref bean="mySoapHandler"/>
+        </ws:handlers>
+    </ws:service>
+
+    <wss:binding url="/MessageService" service="#messageService"/>
+
 </beans>
